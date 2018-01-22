@@ -3,9 +3,9 @@
 
 #define TAU (3.14159*2)
 
-float freq=500.0;     // time units per full TAU cycle
-float rate=20.0;     // number of rising edges per TAU
-float width;
+float freq      = 500.0;     // time units per full TAU cycle
+float rate      = 20.0;     // number of rising edges per TAU
+float duty_cycle= 0.5;   // 0.0-1.0, percentage
 float phase;
 
 unsigned int cur_time = 0;
@@ -15,6 +15,9 @@ float next_rising_edge(void) {
   return last_rise + ((freq/rate) + (sin((last_rise/freq)*TAU)*(freq/rate)));
 }
 
+float next_falling_edge(void) {
+  return last_rise + (((freq/rate) + (sin((last_rise/freq)*TAU)*(freq/rate)))*pulse_width);
+}
 
 int main(void) {
   for(int i=0;i<500;i++) {
