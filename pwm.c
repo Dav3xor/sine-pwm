@@ -12,7 +12,7 @@ unsigned int cur_time = 0;
 unsigned int last_rise = 0;
 
 float next_rising_edge(void) {
-  return last_rise + ((freq/rate) + (sin((last_rise/freq+phase)*TAU)*(freq/rate)));
+  return last_rise + ((freq/rate) + (sin((last_rise/freq)*TAU+phase)*(freq/rate)));
 }
 
 float next_falling_edge(void) {
