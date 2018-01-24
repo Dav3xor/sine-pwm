@@ -15,7 +15,7 @@ class SinePWM {
     SinePWM() {
       freq         = 250.0;
       rate         = 40.0;
-      duty_cycle   = 0.5;
+      duty_cycle   = 0.2;
       phase        = 0.0;
       cur_time     = 0;
       last_rising  = 0;
@@ -30,6 +30,7 @@ class SinePWM {
       next_rising = cur_time;
       next_rising  = next_rising + (freq/rate) + (sin((next_rising/freq)*TAU+phase)*(freq/rate));
       next_falling = next_rising + ((freq/rate) + sin((last_rising/freq)*TAU+phase)*(freq/rate))*duty_cycle;
+      
       cout << "rising = " << next_rising << endl;
       cout << "falling = " << next_falling << endl;
     }
@@ -59,6 +60,21 @@ class SinePWM {
 
     void set_freq(float new_freq) {
       freq = new_freq;
+      new_edge();
+    }
+    
+    void set_rate(float new_rate) {
+      rate = new_rate;
+      new_edge();
+    }
+    
+    void set_duty_cycle(float new_duty_cycle) {
+      duty_cycle = new_duty_cycle;
+      new_edge();
+    }
+    
+    void set_phase(float new_phase) {
+      phase = new_phase;
       new_edge();
     }
 
