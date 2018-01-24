@@ -13,53 +13,48 @@ unsigned int cur_time = 0;
 class SinePWM {
   public:
     SinePWM() {
-      freq        = 500.0;
-      rate        = 20.0;
-      duty_cycle  = 0.5;
-      phase       = 0.0;
-      cur_time    = 0;
-      last_rising = 0;
-      next_change = 0;
-      cur_state   = high;
+      freq         = 250.0;
+      rate         = 40.0;
+      duty_cycle   = 0.5;
+      phase        = 0.0;
+      cur_time     = 0;
+      last_rising  = 0;
+      next_rising  = 0;
+      next_falling = 0;
+      cur_state    = low;
+      set_edges();
     }
 
 
-    set_edges(void) {
+    void set_edges(void) {
+      next_rising = cur_time;
       next_rising  = next_rising + (freq/rate) + (sin((next_rising/freq)*TAU+phase)*(freq/rate));
       next_falling = next_rising + ((freq/rate) + sin((last_rising/freq)*TAU+phase)*(freq/rate))*duty_cycle;
-    }
-
-    float next_rising_edge(void) {
-      return last_rising + (freq/rate) + (sin((last_rising/freq)*TAU+phase)*(freq/rate));
-    }
-
-    float next_falling_edge(void) {
-      return last_rising + (( (freq/rate) + (sin((last_rising/freq)*TAU+phase)*(freq/rate))*duty_cycle));
+      cout << "rising = " << next_rising << endl;
+      cout << "falling = " << next_falling << endl;
     }
 
     void tick(void) {
-      cout << "tick" << endl;
-      if (cur_time >= next_change) {
-        if(cur_state == low) {
+      cout << "tick " << cur_time << endl;
+      if (cur_state == low) {
+        if (cur_time >= next_rising) {
+          last_rising = next_rising;
           cur_state = high;
-          next_change = next_falling_edge();
-          last_rising = cur_time;
-          cout << "rising edge " << next_change << endl;
-        } else {
+          cout << "rising edge " << cur_time << endl;
+        } 
+      } else { 
+        if (cur_time >= next_falling) {
           cur_state = low;
-          next_change = next_rising_edge();
-          cout << "falling edge " << next_change << endl;
+          set_edges();
+          cout << "falling edge " << cur_time << endl;
         }
       }
       cur_time += 1;
     }
    
     void new_edge(void) {
-      if(cur_state==low) {
-        next_change = next_rising_edge();
-      } else {
-        next_change = next_falling_edge();
-      }
+      next_rising = last_rising;
+      set_edges();
     }
 
     void set_freq(float new_freq) {
@@ -75,7 +70,8 @@ class SinePWM {
     float phase;
     unsigned int cur_time;
     unsigned int last_rising;
-    unsigned int next_change;
+    unsigned int next_rising;
+    unsigned int next_falling;
     State cur_state;
 };
 
