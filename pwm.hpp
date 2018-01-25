@@ -10,6 +10,9 @@ unsigned int cur_time = 0;
 
 
 
+// controls:  freq, rate, duty_cycle, phase
+
+
 class SinePWM {
   public:
     SinePWM() {
@@ -27,7 +30,6 @@ class SinePWM {
 
 
     void set_edges(void) {
-      next_rising = cur_time;
       next_rising  = next_rising + (freq/rate) + (sin((next_rising/freq)*TAU+phase)*(freq/rate));
       next_falling = next_rising + ((freq/rate) + sin((last_rising/freq)*TAU+phase)*(freq/rate))*duty_cycle;
       
@@ -46,6 +48,7 @@ class SinePWM {
       } else { 
         if (cur_time >= next_falling) {
           cur_state = low;
+          next_rising = cur_time;
           set_edges();
           cout << "falling edge " << cur_time << endl;
         }
