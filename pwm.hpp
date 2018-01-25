@@ -93,9 +93,3 @@ class SinePWM {
 
 
 
-int main(void) {
-  SinePWM pwm;
-  for(int i=0;i<500;i++) {
-    pwm.tick();
-  }
-}
