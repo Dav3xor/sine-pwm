@@ -24,14 +24,15 @@ class SinePWM {
       last_rising  = 0;
       next_rising  = 0;
       next_falling = 0;
+      aspect       = .7;
       cur_state    = low;
       set_edges();
     }
 
 
     void set_edges(void) {
-      next_rising  = next_rising + (freq/rate) + (sin((next_rising/freq)*TAU+phase)*(freq/rate));
-      next_falling = next_rising + ((freq/rate) + sin((last_rising/freq)*TAU+phase)*(freq/rate))*duty_cycle;
+      next_rising  = next_rising + (freq/rate) + (sin((next_rising/freq)*TAU+phase)*(freq/rate)*aspect);
+      next_falling = next_rising + ((freq/rate) + sin((last_rising/freq)*TAU+phase)*(freq/rate)*aspect)*duty_cycle;
     }
 
     void tick(void) {
@@ -83,6 +84,7 @@ class SinePWM {
     float rate;         // number of rising edges per TAU
     float duty_cycle;   // 0.0-1.0, percentage
     float phase;
+    float aspect;
     unsigned int cur_time;
     unsigned int last_rising;
     unsigned int next_rising;
