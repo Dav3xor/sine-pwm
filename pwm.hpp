@@ -16,8 +16,8 @@ unsigned int cur_time = 0;
 class SinePWM {
   public:
     SinePWM() {
-      freq         = 250.0;
-      rate         = 40.0;
+      freq         = 1000.0;
+      rate         = 121.0;
       duty_cycle   = 1.0;
       phase        = 0.0;
       cur_time     = 0;
