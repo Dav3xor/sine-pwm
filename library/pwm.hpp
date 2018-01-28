@@ -17,14 +17,14 @@ class SinePWM {
   public:
     SinePWM() {
       freq         = 1000.0;
-      rate         = 121.0;
+      rate         = 10.0;
       duty_cycle   = 1.0;
       phase        = 0.0;
       cur_time     = 0;
       last_rising  = 0;
       next_rising  = 0;
       next_falling = 0;
-      aspect       = .7;
+      aspect       = .763;
       cur_state    = low;
       set_edges();
     }
