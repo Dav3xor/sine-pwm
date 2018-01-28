@@ -3,7 +3,7 @@
 
 #define TAU (3.14159*2)
 
-unsigned int cur_time = 0;
+
 
 
 
@@ -14,7 +14,7 @@ class SinePWM {
   public:
     SinePWM() {
       freq         = 1000.0;
-      rate         = 10.0;
+      rate         = 130.0;
       duty_cycle   = 1.0;
       phase        = 0.0;
       cur_time     = 0;
