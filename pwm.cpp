@@ -1,10 +1,7 @@
 #include <math.h>
-#include <stdio.h>
-#include <iostream>
+#include "Arduino.h"
 
 #define TAU (3.14159*2)
-
-using namespace std;
 
 unsigned int cur_time = 0;
 
@@ -38,17 +35,19 @@ class SinePWM {
     void tick(void) {
       if (cur_state == low) {
         if (cur_time >= next_rising) {
+          digitalWrite(LED_BUILTIN, HIGH);
           last_rising = next_rising;
           cur_state = high;
         } 
-        cout << "_";
+        
       } else { 
         if (cur_time >= next_falling) {
+          digitalWrite(LED_BUILTIN, LOW);
           cur_state = low;
           next_rising = cur_time;
           set_edges();
         }
-        cout << "-";
+        
       }
       cur_time += 1;
     }
@@ -72,7 +71,7 @@ class SinePWM {
       duty_cycle = new_duty_cycle;
       new_edge();
     }
-    
+
     void set_phase(float new_phase) {
       phase = new_phase;
       new_edge();
@@ -91,6 +90,7 @@ class SinePWM {
     unsigned int next_falling;
     State cur_state;
 };
+
 
 
 

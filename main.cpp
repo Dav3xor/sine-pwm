@@ -1,10 +1,19 @@
-#include "pwm.hpp"
+#include "Arduino.h"
+#include "pwm.cpp"
 
-using namespace std;
 
-int main(void) {
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+}
+
+void loop() {
   SinePWM pwm;
-  for(int i=0;i<2000;i++) {
+  while(1) {
     pwm.tick();
+    delay(10);
   }
 }
+
+
+
