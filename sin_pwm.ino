@@ -11,9 +11,10 @@ void setup() {
 void loop() {
 
   while(1) {
-    Serial.print(analogRead(A0));
+    Serial.println(analogRead(A0));
+    pwm.set_duty_cycle(analogRead(A0));
     pwm.tick();
-    delay(10);
+    delay(200);
   }
 }
 
