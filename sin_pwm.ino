@@ -11,8 +11,9 @@ void setup() {
 void loop() {
 
   while(1) {
-    Serial.println(analogRead(A0));
-    pwm.set_duty_cycle(analogRead(A0));
+    //Serial.println(analogRead(A0));
+    pwm.set_rate(analogRead(A0));
+    //pwm.set_duty_cycle(.5);
     pwm.tick();
     delay(200);
   }
