@@ -59,22 +59,22 @@ class SinePWM {
 
     void set_freq(float new_freq) {
       freq = new_freq;
-      new_edge();
+      set_edges();
     }
     
     void set_rate(float new_rate) {
       rate = new_rate;
-      new_edge();
+      set_edges();
     }
     
     void set_duty_cycle(float new_duty_cycle) {
       duty_cycle = new_duty_cycle;
-      new_edge();
+      set_edges();
     }
 
     void set_phase(float new_phase) {
       phase = new_phase;
-      new_edge();
+      set_edges();
     }
 
   private:
